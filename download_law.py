@@ -50,20 +50,20 @@ def get_text():
 
         soup = BeautifulSoup(respond.text, 'html.parser')
         div = soup.find('div', class_='text', id='fontzoom')
-        try:
-            result = div.find_all('p', style="text-indent: 2em; text-align: justify;")
-        except Exception as e:
-            print('Err occurred in URL No.' + i.__str__())
-            print(e.args)
+        result = div.find_all('p', style="text-indent: 2em; text-align: justify;")
+        if result.__len__() == 0:
+            print('!!! Writing file No.{} but using origin text'.format(i))
+            with open(i.__str__() + '_origin.txt', 'w', encoding='utf-8') as f:
+                f.write(div.text)
         else:
             print('Writing file No.' + i.__str__())
             with open(i.__str__() + '.txt', 'w', encoding='utf-8') as f:
                 for p in result:
-                    # if p.find('br'): break  # 从<br>开始是附件和日期等信息, 删除
+                    if p.find('br'): break  # 从<br>开始是附件和日期等信息, 删除
                     f.write(p.text + '\n')
-        finally:
-            time.sleep(1)
-            i += 1
+
+        time.sleep(1)
+        i += 1
 
 
 if __name__ == '__main__':
