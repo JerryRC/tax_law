@@ -69,12 +69,3 @@ def get_text():
 if __name__ == '__main__':
     # get_url_list()
     get_text()
-    url = 'http://www.chinatax.gov.cn/chinatax/n359/c10859408/content.html'
-    ua = UserAgent()
-    headers = {"User-Agent": ua.random}
-
-    respond = requests.get(url, headers=headers)
-    respond.encoding = 'utf-8'
-
-    soup = BeautifulSoup(respond.text, 'html.parser')
-    print(soup.text)
